@@ -192,6 +192,10 @@
             move() {
                 this.stop();
                 this.timer = setInterval(() => {
+                    if (this.isOver()) {
+                        this.over();
+                        return;
+                    }
                     this.snake.move();
                     this.map.clearData();
                     if (this.isEat()) {
@@ -220,7 +224,7 @@
 
             isOver() {
                 let head = this.snake.data[0];
-                if (head.x < 0 || head.x >= this.map.cells || head.y < 0 || head.y >= this.map.rows) {
+                if (head.x <= 0 || head.x >= this.map.cells || head.y <= 0 || head.y >= this.map.rows) {
                     return true;
                 }
                 if (this.snake.data.slice(1).some(item => {
